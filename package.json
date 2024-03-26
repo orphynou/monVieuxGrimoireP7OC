@@ -1,0 +1,23 @@
+{
+  "name": "p7oc",
+  "version": "1.0.0",
+  "description": "Projet 7 OC - Mon vieux grimoire",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orphynou/monVieuxGrimoireP7OC.git"
+  },
+  "author": "Anthony S.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orphynou/monVieuxGrimoireP7OC/issues"
+  },
+  "homepage": "https://github.com/orphynou/monVieuxGrimoireP7OC#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
