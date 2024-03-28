@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const Book = require("./models/Book");
 const bookRoutes = require("./routes/book");
+const userRoutes = require("./routes/user");
 const password = require("./utils/pwd");
 
 const app = express();
-const uri = `mongodb+srv://p7-oc:${password}@cluster0.mxknxdu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://p7-oc:${password}@cluster0.9hpqmgt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
 };
@@ -32,5 +33,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/books", bookRoutes);
+app.use("/api/auth", userRoutes);
 
 module.exports = app;

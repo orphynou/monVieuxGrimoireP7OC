@@ -3,13 +3,13 @@ const Book = require("../models/Book");
 //Ok fonctionnel, retourne bien un tableau
 exports.getAllBooks = (req, res, next) => {
   Book.find()
-    .then((books) => res.status(200).json({ books: books }))
+    .then((books) => res.status(200).json(books))
     .catch((error) => res.status(400).json({ error }));
 };
 
 //A vérifier si l'id est bien récupéré une fois bien avancé dans le code
 exports.getOneBook = (req, res, next) => {
-  Book.findOne({ userId: req.params.id })
+  Book.findOne({ _id: req.params.id })
     .then((book) => res.status(200).json(book))
     .catch((error) => res.status(400).json({ error }));
 };
@@ -17,12 +17,13 @@ exports.getOneBook = (req, res, next) => {
 //A compléter plus tard
 exports.getBestThreeBooks = (req, res, next) => {
   Book.find()
-    .then((books) => res.status(200).json({ books: books }))
+    .then((books) => res.status(200).json(books))
     .catch((error) => res.status(400).json({ error }));
 };
 
 //A compléter plus tard - Auth requis
 exports.createBook = (req, res, next) => {
+  delete req.body._id;
   const book = new Book({
     ...req.body,
   });
