@@ -1,5 +1,4 @@
 const Book = require("../models/Book");
-const average = require("../utils/average");
 const fs = require("fs");
 
 // requete GET pour récupérer tous les livres
