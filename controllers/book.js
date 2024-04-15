@@ -27,6 +27,16 @@ exports.getOneBook = (req, res, next) => {
 // requete POST pour ajouter un livre
 exports.createBook = (req, res, next) => {
   try {
+    const bookObject = JSON.parse(req.body.book);
+    if (
+      !bookObject.title ||
+      !bookObject.author ||
+      !bookObject.year ||
+      isNaN(parseInt(bookObject.year, 10)) ||
+      !bookObject.genre
+    ) {
+      throw new Error("Tous les champs doivent être renseignés");
+    }
     delete bookObject._id;
     delete bookObject._userId;
     const book = new Book({
@@ -63,6 +73,15 @@ exports.modifyBook = (req, res, next) => {
           }`,
         }
       : { ...req.body };
+    if (
+      !bookObject.title ||
+      !bookObject.author ||
+      !bookObject.year ||
+      isNaN(parseInt(bookObject.year, 10)) ||
+      !bookObject.genre
+    ) {
+      throw new Error("Tous les champs doivent être renseignés");
+    }
     delete bookObject._userId;
     Book.findOne({ _id: req.params.id })
       .then((book) => {
