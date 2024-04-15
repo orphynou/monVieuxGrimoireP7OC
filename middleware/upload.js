@@ -27,27 +27,25 @@ exports.imgStorage = multer({ storage: storage }).single("image");
 
 exports.optimizedImage = async (req, res, next) => {
   try {
-    // Vérification si un fichier a été téléchargé
-    if (!req.file) {
-      throw new Error("Aucune image téléchargée");
+    // Vérifiez si un fichier a été téléchargé et que le chemin du fichier est défini
+    if (req.file && req.file.path) {
+      // Chemin de l'image téléchargée et renommage avec la nouvelle extension
+      const filePath = req.file.path;
+      const fileName = req.file.filename;
+      const optimizedFileName = `${fileName.split(".")[0]}_resized.webp`;
+      const optimizedFilePatch = path.join("images", optimizedFileName);
+
+      // Redimensionnement et conversion de l'image avec Sharp
+      await sharp(filePath)
+        .resize({ height: 300 })
+        .toFormat("webp")
+        .toFile(optimizedFilePatch);
+
+      // Suppression de l'image originale et mise à jour du chemin et du nom
+      fs.unlink(filePath, () => {});
+      req.file.path = optimizedFilePatch;
+      req.file.filename = optimizedFileName;
     }
-
-    // Chemin de l'image téléchargée et renommage avec la nouvelle extension
-    const filePath = req.file.path;
-    const fileName = req.file.filename;
-    const optimizedFileName = `${fileName.split(".")[0]}_resized.webp`;
-    const optimizedFilePatch = path.join("images", optimizedFileName);
-
-    // Redimensionnement et conversion de l'image avec Sharp
-    await sharp(filePath)
-      .resize({ height: 300 })
-      .toFormat("webp")
-      .toFile(optimizedFilePatch);
-
-    // Suppression de l'image originale et mise à jour du chemin et du nom
-    fs.unlink(filePath, () => {});
-    req.file.path = optimizedFilePatch;
-    req.file.filename = optimizedFileName;
     next();
   } catch (error) {
     next(error);
